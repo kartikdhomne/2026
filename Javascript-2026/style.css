@@ -1,0 +1,32 @@
+.div,
+.form,
+.btn {
+  border: 1px solid red;
+  padding: 16px;
+}
+
+.btn {
+  margin-left: 16px;
+  cursor: pointer;
+}
+
+
+.modalContainer{
+  display: none;
+  position: absolute;
+  top: 0;
+  background-color: antiquewhite;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal{
+  width: 500px;
+  height: 400px;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 5px grey;
+  border-radius: 16px;
+}
