@@ -104,5 +104,43 @@ obj3.x();
 
 // > It refers to HTML element.
 
-{/* <button onclick="alert(this)">Click Me</button> */}
+{/* <button onclick="alert(this)">Click Me</button> */ }
 // <!-- [object HTMLButtonElement] Button element -->
+
+
+// 🔴🟢 Interview Questions
+
+// Example 1:
+const object = {
+  name: "Kartik",
+  normal: function () {
+    console.log(this.name);
+  },
+  arrow: () => {
+    console.log(this.name);
+  }
+};
+
+object.normal(); // Kartik
+object.arrow(); // Undefined 
+
+
+// Example 2:
+
+<button id="btn">Click Me</button>
+  const button = document.getElementById("btn");
+
+  // Normal function
+  button.addEventListener("click", function () {
+    console.log("Normal function:", this);
+  });
+
+  // Arrow function
+  button.addEventListener("click", () => {
+    console.log("Arrow function:", this);
+  });
+
+  // Output : 
+  // Normal function: <button id = "btn">Click Me</button >
+  // Arrow function: window
+
