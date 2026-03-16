@@ -22,3 +22,22 @@
 // 3) Drag and Drop movement → Prevent too many paint/DOM updates
 // 4) Mouse move or touch move events → Keeps UI smooth
 
+function throttle(func, delay) {
+    let lastCall = 0;
+
+    return function () {
+        const now = new Date().getTime();
+
+        if (now - lastCall >= delay) {
+            lastCall = now;
+            func();
+        }
+    };
+}
+
+const handleScroll = throttle(() => {
+    console.log("scroll event");
+}, 1000);
+
+window.addEventListener("scroll", handleScroll);
+
