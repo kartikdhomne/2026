@@ -1,0 +1,46 @@
+1) What is React Component ?
+
+==> Components are like JavaScript functions. They accept inputs (called “props”) and return React elements as JSX describing what should appear on the screen.
+
+// Example
+import Welcome from './components/Welcome.jsx';
+
+function App() {
+  return (
+    <div className="App">
+      <Welcome />
+      <Welcome /> {/* Components can be reused */}
+    </div>
+  );
+}
+
+export default App;
+
+---------------------------------------------------------------------------------------
+2) What is JSX? How does it work under the hood? (https://www.telerik.com/blogs/how-jsx-react-works-under-hood)
+
+==> JSX (JavaScript XML) is a syntax extension for JavaScript that allows developers to write HTML-like markup within JavaScript code.
+
+Web browsers cannot directly understand or execute JSX. Therefore, before the code runs in the browser, a process called transpilation occurs through tool like Babel, which converts the JSX into regular, valid JavaScript.
+
+For example, <div>Hello, world!</div> in JSX is transformed into React.createElement('div', null, 'Hello, world!').
+
+React.createElement(
+  type,
+  [props],
+  [...children]
+)
+
+// example
+
+import {jsx as _jsx} from 'react/jsx-runtime'; 
+
+const element = _jsx('h1', { children: 'Hello, world!' });
+
+-------------------------------------------------------------------------------------
+3) What are props? How do you pass and validate them?
+
+
+
+
+6. What is state in React? How do you manage it?
