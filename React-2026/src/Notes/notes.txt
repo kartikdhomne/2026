@@ -38,6 +38,99 @@ import {jsx as _jsx} from 'react/jsx-runtime';
 const element = _jsx('h1', { children: 'Hello, world!' });
 
 -------------------------------------------------------------------------------------
+3) What is React Fibre ?
+React Fiber is a complete rewrite of React's core reconciliation algorithm, introduced in React 16. Its primary purpose is to enable incremental rendering—the ability to split rendering work into chunks and spread it out over multiple frames.
+
+While the old "Stack Reconciler" worked like a runaway train that couldn't stop until it reached the station, Fiber works like a commuter train that can pause at stations to let higher-priority passengers (like user clicks or animations) board first.
+
+1. From Stack to Fiber: The Major Shift
+The transition was essentially a move from a synchronous, recursive model to an asynchronous, linked-list model.
+
+Feature	Stack Reconciler (Old)	Fiber Reconciler (New)
+Structure	Uses the native JavaScript Call Stack.	
+Uses a custom Linked List of "Fiber" nodes.
+
+Execution	Recursive and Synchronous.
+Iterative and Asynchronous.
+
+Interruptibility	Cannot be interrupted until finished.
+Can be paused, resumed, or aborted.
+
+Priority	All updates are treated equally.
+Updates have Priority Levels (Lanes).
+
+UI Impact	Can cause "jank" or lag in heavy apps.
+Keeps the UI responsive by yielding to the browser.
+
+2. How the "Fiber" Node Works
+In the old system, React relied on the built-in JS stack. If you had a deep component tree, React would stay on the stack until the entire tree was processed. You couldn't "break out" of a function mid-execution to handle a click.
+
+Fiber reimagines the stack frame. Each "Fiber" is a JavaScript object that acts as a virtual stack frame. Because these frames are saved in memory (not on the engine's call stack), React can:
+
+Pause a component's render.
+
+Go back to a parent.
+
+Jump to a different part of the tree.
+
+Reuse work that was already done.
+
+3. The Two-Phase Process
+Fiber splits work into two distinct phases to ensure the UI stays consistent:
+
+Phase 1: Reconciliation (Render Phase)
+
+Nature: Asynchronous and interruptible.
+
+Work: React traverses the tree and identifies changes (the "diffing"). It builds a workInProgress tree.
+
+Interruption: If a high-priority event (like a keystroke) comes in, React pauses the work, handles the event, and then either resumes or restarts the reconciliation.
+
+Phase 2: Commit Phase
+
+Nature: Synchronous and non-interruptible.
+
+Work: React applies the calculated changes to the actual DOM. This happens in one single "flush" to prevent the user from seeing a partially updated UI.
++1
+
+4. Key Benefits
+Time Slicing: Spreading heavy rendering across multiple frames (e.g., 16ms chunks) so the browser can still paint and handle input.
+
+Concurrency: React can work on multiple versions of the UI at once in memory.
+
+Error Boundaries: Fiber allows catching errors in a specific subtree without crashing the entire application.
+
+Suspense: The ability to "wait" for data or code to load before finishing a render is only possible because of Fiber's ability to pause work.
+
+
+OR
+
+
+React Fiber is a complete rewrite of React’s reconciliation algorithm introduced in React 16.
+
+The main goal was to move from a stack-based, synchronous rendering model to a fiber-based architecture that supports interruptible and prioritized rendering.
+
+In the old model, React used the JavaScript call stack, so rendering was recursive and blocking—once it started, it couldn’t pause, which could cause UI lag.
+
+Fiber replaces this with a linked data structure called a Fiber tree, where each node represents a component and stores fields like child, sibling, return, and stateNode.
+
+Instead of recursion, React uses an iterative work loop, processing one fiber at a time using beginWork and completeWork.
+
+This enables React to pause, resume, or restart rendering, which is key for responsiveness.
+
+The work is split into two phases:
+
+The render phase, which is interruptible and builds a work-in-progress tree
+The commit phase, which is synchronous and applies all DOM updates atomically
+
+Fiber also introduces priority scheduling using lanes, so urgent updates like user input are handled before lower-priority work.
+
+It uses time slicing to break rendering into small chunks and yield control back to the browser when needed.
+
+Finally, it uses double buffering, maintaining a current tree and a work-in-progress tree, ensuring the UI is never partially updated.
+
+Overall, Fiber makes React rendering incremental, interruptible, and more responsive, enabling features like Concurrent Mode and Suspense.
+-------------------------------------------------------------------------------
 3) What are props? How do you pass and validate them?
 
 
