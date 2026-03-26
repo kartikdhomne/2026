@@ -1,0 +1,12 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-group{
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  gap: 4px;
+}
