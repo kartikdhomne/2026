@@ -35,7 +35,7 @@ function BestTimeStock(prices) {
 
 console.log(BestTimeStock(prices));
 
-// Step 3 : With 
+// Step 3 : Similar to above ( easy but careful)
 
 function BestTimeStock(prices) {
   if (prices.length === 0) return;
@@ -54,3 +54,11 @@ function BestTimeStock(prices) {
 }
 
 console.log(BestTimeStock(prices));
+
+// | Problem Type          | Approach          | Use |
+// | --------------------- | ------------------| -------------------- |
+// | Basic(1 buy, 1 sell) | Min Price Tracking | ⭐ MOST IMPORTANT |
+// | Multiple trades      | Greedy(sum profit) | Very common |
+// | Constraints(cooldown, fee) | DP |Advanced |
+// | Beginner             | Brute force        | Only for explanation |
+
