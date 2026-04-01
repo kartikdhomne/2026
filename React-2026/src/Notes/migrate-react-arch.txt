@@ -1,0 +1,59 @@
+How would you migrate a legacy React app to a modern architecture without
+downtime?
+
+Migrating a legacy React app to a modern architecture without downtime is best approached using the Strangler Fig pattern — gradually replacing old parts while keeping the app live. Here's how to do it well:
+1. Audit & Plan First
+Before touching code, understand what you have:
+
+Catalog all routes, components, data flows, and third-party dependencies
+Identify pain points (outdated patterns, class components, prop drilling, missing TypeScript, etc.)
+Define your target architecture (e.g., Vite + React 18 + TypeScript + Zustand/React Query)
+Set measurable milestones so the migration doesn't drag on indefinitely
+
+2. Set Up the Scaffold in Parallel
+Create your new architecture alongside the old one — don't rewrite in place:
+
+Initialize the new app (e.g., with Vite) in a /new directory or a separate branch/repo
+Set up CI/CD, linting, TypeScript config, and testing from day one
+Configure a reverse proxy (Nginx, Vercel rewrites, Cloudflare) to route traffic between old and new — this is the key to zero downtime
+
+3. Migrate from the Edges Inward
+Start with low-risk, high-isolation pieces:
+
+Shared utilities first — helpers, constants, API clients. These have no UI risk.
+Leaf components next — buttons, inputs, cards. No children, easy to test.
+Feature modules after — one route or feature at a time, each behind a feature flag
+Core layout and routing last — this is highest risk and comes only after confidence is built
+
+4. Use Feature Flags as a Safety Net
+Tools like LaunchDarkly, Unleash, or even a simple env variable let you:
+
+Serve the new component to a % of users (canary releases)
+Instantly roll back if something breaks without a redeploy
+Test in production with internal users first
+
+5. Share State During the Transition
+When old and new components coexist, you need a shared data layer:
+
+Use a global event bus or shared store (Redux, Zustand, or even window.__store) that both old and new code read from
+Avoid duplicating API calls — centralize fetching so both sides stay in sync
+If using micro-frontends, Module Federation (Webpack 5) lets old and new apps share dependencies at runtime
+
+6. Modernize Incrementally, Not All at Once
+Don't try to add TypeScript + React 18 + new router + new state management simultaneously:
+PhaseFocusPhase 1Build tooling (Vite, ESLint, Prettier)Phase 2TypeScript (add gradually with allowJs: true)Phase 3Class → function components + hooksPhase 4State management overhaulPhase 5Routing modernizationPhase 6Cut over fully, retire old code
+7. Test at Every Step
+
+Write tests before migrating a component so you can verify parity
+Use Storybook to visually compare old vs. new components side by side
+Run E2E tests (Playwright/Cypress) against the live proxy to catch regressions
+
+8. Cut Over and Clean Up
+Once a route or module is fully migrated and stable:
+
+Update the proxy rules to send 100% of traffic to the new version
+Delete the old code (important — don't let the strangler become permanent)
+Monitor error rates, performance (Core Web Vitals), and user feedback for 1–2 weeks
+
+
+The golden rule: ship working software at every step. Each migration increment should be independently deployable and reversible. The strangler fig works because users never see a "migration" — they just see a product that keeps improving.
