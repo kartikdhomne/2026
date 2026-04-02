@@ -5,7 +5,7 @@
 // dependencies change.
 
 // example
-const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+// const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
 
 //  🚀 Why do we need useMemo?
 // In React, every render re-runs your component function.
