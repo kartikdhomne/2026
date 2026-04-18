@@ -1,4 +1,4 @@
-// Throttling :
+// Throttling :-
 
 // Throttling is an optimization technique that ensures a function runs
 // at MOST once in a given time interval — even if triggered repeatedly.
