@@ -4,7 +4,7 @@
 // at MOST once in a given time interval — even if triggered repeatedly.
 
 // Unlike debouncing (which waits until user stops), throttling guarantees execution,
-// but *limits the frequency*.
+// but limits the frequency.
 
 // ➡️ Real Life Example
 
