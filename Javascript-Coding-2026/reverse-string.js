@@ -24,6 +24,7 @@ function reverseStringOne(str) {
         left++;
         right--;
     }
+    return str;
 };
 console.log(reverseString(str));
 console.log(reverseStringOne(str));
